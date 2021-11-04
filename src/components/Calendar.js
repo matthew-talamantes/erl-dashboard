@@ -20,6 +20,9 @@ const Calendar = ({ displayDate }) => {
             <table id="calendar-element" className="calendar">
                 <thead>
                     <tr>
+                        <th>{ displayDate.getFullYear() }</th>
+                    </tr>
+                    <tr>
                         <th>{getMonthName(displayDate)}</th>
                     </tr>
                 </thead>
