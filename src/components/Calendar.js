@@ -8,6 +8,7 @@ const Calendar = ({ displayDate }) => {
 
     const [year, setYear] = React.useState(displayDate.getFullYear());
     const [month, setMonth] = React.useState(displayDate.getMonth());
+    const [daysOfMonth, setDaysOfMonth] = React.useState();
 
 
     const getMonthName = (date) => {
@@ -15,8 +16,10 @@ const Calendar = ({ displayDate }) => {
     };
 
     const daysInMonth = (monthOfYear, calendarYear) => {
-        return new Date(calendarYear, monthOfYear, 0).getDate();
+        return new Date(calendarYear, monthOfYear + 1, 0).getDate();
     };
+
+    let monthDays = daysInMonth(month, year);
 
     const decreaseYear = () => {
         setYear(year - 1);
@@ -44,6 +47,10 @@ const Calendar = ({ displayDate }) => {
             setMonth(month + 1);
         }
     };
+
+    React.useEffect(() => {
+        setDaysOfMonth(daysInMonth(month, year));
+    }, [month, year]);
 
     return (
         <section className="container">
