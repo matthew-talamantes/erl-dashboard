@@ -6,13 +6,43 @@ const Calendar = ({ displayDate }) => {
     const currentDate = Date.now();
     const months = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
+    const [year, setYear] = React.useState(displayDate.getFullYear());
+    const [month, setMonth] = React.useState(displayDate.getMonth());
+
+
     const getMonthName = (date) => {
-        const month = date.getMonth();
         return months[month];
     };
 
-    const daysInMonth = (month, year) => {
-        return new Date(year, month, 0).getDate();
+    const daysInMonth = (monthOfYear, calendarYear) => {
+        return new Date(calendarYear, monthOfYear, 0).getDate();
+    };
+
+    const decreaseYear = () => {
+        setYear(year - 1);
+    };
+
+    const increaseYear = () => {
+        setYear(year + 1);
+    };
+
+    const decreaseMonth = () => {
+        if (month === 0) {
+            setYear(year - 1);
+            setMonth(11);
+        } else {
+            setMonth(month - 1);
+        }
+
+    };
+
+    const increaseMonth = () => {
+        if (month === 11) {
+            setYear(year + 1);
+            setMonth(0);
+        } else {
+            setMonth(month + 1);
+        }
     };
 
     return (
@@ -20,10 +50,10 @@ const Calendar = ({ displayDate }) => {
             <table id="calendar-element" className="calendar">
                 <thead>
                     <tr>
-                        <th>{ displayDate.getFullYear() }</th>
+                        <th><span className="btn" id="btn-year-decrease" onClick={decreaseYear}>{`<`}</span> { year } <span className="btn" id="btn-year-increase" onClick={increaseYear}>{`>`}</span></th>
                     </tr>
                     <tr>
-                        <th>{getMonthName(displayDate)}</th>
+                        <th><span className="btn" id="btn-month-decrease" onClick={decreaseMonth}>{`<`}</span> {getMonthName(month)} <span className="btn" id="btn-month-increase" onClick={increaseMonth}>{`>`}</span></th>
                     </tr>
                 </thead>
             </table>
