@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CalendarBody from './CalendarBody';
 
 const Calendar = ({ displayDate }) => {
 
@@ -63,6 +64,7 @@ const Calendar = ({ displayDate }) => {
                         <th><span className="btn" id="btn-month-decrease" onClick={decreaseMonth}>{`<`}</span> {getMonthName(month)} <span className="btn" id="btn-month-increase" onClick={increaseMonth}>{`>`}</span></th>
                     </tr>
                 </thead>
+                <CalendarBody year={year} month={month} daysInMonth={daysOfMonth} />
             </table>
         </section>
     );
