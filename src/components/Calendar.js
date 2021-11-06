@@ -9,7 +9,6 @@ const Calendar = ({ displayDate }) => {
 
     const [year, setYear] = React.useState(displayDate.getFullYear());
     const [month, setMonth] = React.useState(displayDate.getMonth());
-    const [daysOfMonth, setDaysOfMonth] = React.useState();
 
 
     const getMonthName = (date) => {
@@ -49,6 +48,8 @@ const Calendar = ({ displayDate }) => {
         }
     };
 
+    const [daysOfMonth, setDaysOfMonth] = React.useState(daysInMonth(month, year));
+
     React.useEffect(() => {
         setDaysOfMonth(daysInMonth(month, year));
     }, [month, year]);
@@ -64,7 +65,7 @@ const Calendar = ({ displayDate }) => {
                         <th><span className="btn" id="btn-month-decrease" onClick={decreaseMonth}>{`<`}</span> {getMonthName(month)} <span className="btn" id="btn-month-increase" onClick={increaseMonth}>{`>`}</span></th>
                     </tr>
                 </thead>
-                <CalendarBody year={year} month={month} daysInMonth={daysOfMonth} />
+                <CalendarBody year={year} month={month} daysOfMonth={daysOfMonth} />
             </table>
         </section>
     );
