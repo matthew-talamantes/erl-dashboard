@@ -5,9 +5,9 @@ const CalendarDay = ({ dayNum, events}) => {
         <td className="calendar-day">
             <h4>{dayNum}</h4>
             <ul>
-                {events.map((event)=>{
+                {events.map((event)=>
                     <li>event[title]</li>
-                })}
+                )}
             </ul>
         </td>
     );
