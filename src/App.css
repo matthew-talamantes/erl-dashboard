@@ -1,0 +1,8 @@
+.calendar th {
+    text-align: center;
+}
+
+
+td.calendar-day {
+    width: 50px;
+}
