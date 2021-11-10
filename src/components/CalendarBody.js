@@ -1,7 +1,7 @@
 import React from 'react';
 import CalendarDay from './CalendarDay';
 
-const CalendarBody = ({ year, month, daysOfMonth }) => {
+const CalendarBody = ({ year, month, daysOfMonth, events }) => {
     const buildCalArray = () => {
         const firstDay = new Date(year, month, 1).getDay();
         const lastDay = new Date(year, month, daysOfMonth).getDay();
@@ -53,6 +53,10 @@ const CalendarBody = ({ year, month, daysOfMonth }) => {
             ))}
         </tbody>
     );
+};
+
+CalendarBody.defaultProps = {
+    events: {}
 };
 
 export default CalendarBody;

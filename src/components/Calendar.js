@@ -45,6 +45,16 @@ const Calendar = ({ displayDate, events }) => {
         }
     };
 
+    const getMonthEvents = (month, year) => {
+        try {
+            return events[year][month];
+        } catch (e) {
+            if (e instanceof TypeError) {
+                return {};
+            }
+        }
+    };
+
     const [daysOfMonth, setDaysOfMonth] = React.useState(daysInMonth(month, year));
 
     React.useEffect(() => {
@@ -62,7 +72,7 @@ const Calendar = ({ displayDate, events }) => {
                         <th colSpan="7"><span className="btn" id="btn-month-decrease" onClick={decreaseMonth}>{`<`}</span> {getMonthName(month)} <span className="btn" id="btn-month-increase" onClick={increaseMonth}>{`>`}</span></th>
                     </tr>
                 </thead>
-                <CalendarBody year={year} month={month} daysOfMonth={daysOfMonth} />
+                <CalendarBody year={year} month={month} daysOfMonth={daysOfMonth} events={getMonthEvents(month, year)} />
             </table>
         </section>
     );
