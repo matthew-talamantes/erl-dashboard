@@ -1,4 +1,5 @@
 import React from 'react';
+import EventPreview from './EventPreview';
 
 const CalendarDay = ({ dayNum, events}) => {
     return (
@@ -6,7 +7,7 @@ const CalendarDay = ({ dayNum, events}) => {
             <h4>{dayNum}</h4>
             <ul>
                 {events.map((event)=>(
-                    {event && `<li>${event[title]}</li>`}
+                    <EventPreview event={event} />
                 ))}
             </ul>
         </td>
