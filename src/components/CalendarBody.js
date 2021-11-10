@@ -7,17 +7,17 @@ const CalendarBody = ({ year, month, daysOfMonth, events }) => {
         const lastDay = new Date(year, month, daysOfMonth).getDay();
         const dayList = [];
         for (let i = 0; i < firstDay; i++) {
-            dayList.push({dayNum: '', events: []});
+            dayList.push('');
         }
 
         for (let i = 1; i <= daysOfMonth; i++){
-            dayList.push({dayNum: i, events: []});
+            dayList.push(i);
         }
 
         if (lastDay < 6) {
             const trailingDays = 6 - lastDay;
             for (let i = 0; i < trailingDays; i++){
-                dayList.push({dayNum: '', events: []});
+                dayList.push('');
             }
         }
         return dayList;
@@ -42,13 +42,23 @@ const CalendarBody = ({ year, month, daysOfMonth, events }) => {
         return weekArray;
     };
 
+    const getDayEvents = (day) => {
+        try {
+            return events[day];
+        } catch (e) {
+            if (e instanceof TypeError) {
+                return [];
+            }
+        }
+    };
+
     const dayList = buildCalArray();
     const weekList = buildWeekArray(dayList);
     return (
         <tbody>
             {weekList.map((week, weekIndex)=>(
                 <tr key={weekIndex} >{week.map((day, dayIndex)=>(
-                    <CalendarDay key={`${weekIndex}-${dayIndex}`} dayNum={day.dayNum} events={day.events} />
+                    <CalendarDay key={`${weekIndex}-${dayIndex}`} dayNum={day} events={getDayEvents(day)} />
                 ))}</tr>
             ))}
         </tbody>
