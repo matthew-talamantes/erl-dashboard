@@ -4,5 +4,6 @@
 
 
 td.calendar-day {
-    width: 50px;
+    width: 15em;
+    height: 10em;
 }
