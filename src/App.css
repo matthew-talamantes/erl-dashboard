@@ -6,4 +6,12 @@
 td.calendar-day {
     width: 15em;
     height: 10em;
+    text-align: left;
+    position: relative;
+}
+
+td.calendar-day h4 {
+    position: absolute;
+    top: 5px;
+    left: 5px;
 }
