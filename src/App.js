@@ -40,7 +40,7 @@ function App() {
   return (
     <>
       <Header />
-      <Calendar displayDate={new Date()} />
+      <Calendar displayDate={new Date()} events={events} />
     </>
   );
 }

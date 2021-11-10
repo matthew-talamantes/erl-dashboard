@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CalendarBody from './CalendarBody';
 
-const Calendar = ({ displayDate }) => {
+const Calendar = ({ displayDate, events }) => {
 
     const months = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -69,11 +69,13 @@ const Calendar = ({ displayDate }) => {
 };
 
 Calendar.defaultProps = {
-    displayDate: new Date()
+    displayDate: new Date(),
+    events: {}
 };
 
 Calendar.propTypes = {
-    displayDate: PropTypes.object
+    displayDate: PropTypes.instanceOf(Date),
+    events: PropTypes.object
 }
 
 export default Calendar;
