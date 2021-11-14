@@ -3,7 +3,7 @@ import EventPreview from './EventPreview';
 
 const CalendarDay = ({ dayNum, events}) => {
     return (
-        <td className="calendar-day">
+        <td className="calendar-day border border-dark">
             <h4>{dayNum}</h4>
             <ul>
                 {events.map((event)=>(

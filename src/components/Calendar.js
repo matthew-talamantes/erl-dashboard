@@ -64,13 +64,13 @@ const Calendar = ({ displayDate, events }) => {
     return (
         <section className="container-md">
             <div className="row">
-                <table id="calendar-element" className="calendar col">
-                    <thead>
+                <table id="calendar-element" className="calendar col mt-4 border border-dark rounded">
+                    <thead className="border border-dark">
                         <tr>
                             <th colSpan="7"><span className="btn" id="btn-year-decrease" onClick={decreaseYear}>{`<`}</span> { year } <span className="btn" id="btn-year-increase" onClick={increaseYear}>{`>`}</span></th>
                         </tr>
                         <tr>
-                            <th colSpan="7"><span className="btn" id="btn-month-decrease" onClick={decreaseMonth}>{`<`}</span> {getMonthName(month)} <span className="btn" id="btn-month-increase" onClick={increaseMonth}>{`>`}</span></th>
+                            <th className="border border-dark" colSpan="7"><span className="btn" id="btn-month-decrease" onClick={decreaseMonth}>{`<`}</span> {getMonthName(month)} <span className="btn" id="btn-month-increase" onClick={increaseMonth}>{`>`}</span></th>
                         </tr>
                     </thead>
                     <CalendarBody year={year} month={month} daysOfMonth={daysOfMonth} events={getMonthEvents(month, year)} />

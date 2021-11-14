@@ -56,6 +56,15 @@ const CalendarBody = ({ year, month, daysOfMonth, events }) => {
     const weekList = buildWeekArray(dayList);
     return (
         <tbody>
+            <tr>
+                <th className="border border-dark">Sunday</th>
+                <th className="border border-dark">Monday</th>
+                <th className="border border-dark">Tuesday</th>
+                <th className="border border-dark">Wednesday</th>
+                <th className="border border-dark">Thursday</th>
+                <th className="border border-dark">Friday</th>
+                <th className="border border-dark">Saturday</th>
+            </tr>
             {weekList.map((week, weekIndex)=>(
                 <tr key={weekIndex} >{week.map((day, dayIndex)=>(
                     <CalendarDay key={`${weekIndex}-${dayIndex}`} dayNum={day} events={getDayEvents(day)} />
