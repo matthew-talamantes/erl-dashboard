@@ -1,10 +1,18 @@
+.calendar {
+    table-layout: fixed;
+}
+
 .calendar th {
     text-align: center;
 }
 
+.calendar tbody tr {
+    align-items: center;
+    justify-content: center;
+}
+
 
 td.calendar-day {
-    width: 15em;
     height: 10em;
     text-align: left;
     position: relative;

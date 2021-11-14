@@ -62,18 +62,20 @@ const Calendar = ({ displayDate, events }) => {
     }, [month, year]);
 
     return (
-        <section className="container">
-            <table id="calendar-element" className="calendar">
-                <thead>
-                    <tr>
-                        <th colSpan="7"><span className="btn" id="btn-year-decrease" onClick={decreaseYear}>{`<`}</span> { year } <span className="btn" id="btn-year-increase" onClick={increaseYear}>{`>`}</span></th>
-                    </tr>
-                    <tr>
-                        <th colSpan="7"><span className="btn" id="btn-month-decrease" onClick={decreaseMonth}>{`<`}</span> {getMonthName(month)} <span className="btn" id="btn-month-increase" onClick={increaseMonth}>{`>`}</span></th>
-                    </tr>
-                </thead>
-                <CalendarBody year={year} month={month} daysOfMonth={daysOfMonth} events={getMonthEvents(month, year)} />
-            </table>
+        <section className="container-md">
+            <div className="row">
+                <table id="calendar-element" className="calendar col">
+                    <thead>
+                        <tr>
+                            <th colSpan="7"><span className="btn" id="btn-year-decrease" onClick={decreaseYear}>{`<`}</span> { year } <span className="btn" id="btn-year-increase" onClick={increaseYear}>{`>`}</span></th>
+                        </tr>
+                        <tr>
+                            <th colSpan="7"><span className="btn" id="btn-month-decrease" onClick={decreaseMonth}>{`<`}</span> {getMonthName(month)} <span className="btn" id="btn-month-increase" onClick={increaseMonth}>{`>`}</span></th>
+                        </tr>
+                    </thead>
+                    <CalendarBody year={year} month={month} daysOfMonth={daysOfMonth} events={getMonthEvents(month, year)} />
+                </table>
+            </div>
         </section>
     );
 };
