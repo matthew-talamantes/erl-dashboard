@@ -7,7 +7,7 @@ const CalendarDay = ({ dayNum, events}) => {
             <h4>{dayNum}</h4>
             <ul>
                 {events.map((event)=>(
-                    <EventPreview event={event} />
+                    event["type"] === 'event' && <EventPreview event={event} />
                 ))}
             </ul>
         </td>

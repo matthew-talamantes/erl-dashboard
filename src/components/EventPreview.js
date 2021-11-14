@@ -3,7 +3,7 @@ import React from 'react';
 const EventPreview = ({ event }) => {
     return (
         <>
-            {event["type"] === 'event' && <li>{event['title']}</li>}
+            <li>{event['title']}</li>
         </>
     );
 };
