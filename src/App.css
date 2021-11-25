@@ -23,3 +23,22 @@ td.calendar-day h4 {
     top: 5px;
     left: 5px;
 }
+
+.cal-event-list {
+    padding-left: 5px;
+}
+
+.cal-event {
+    list-style-type: none;
+    border-left: solid 3px green;
+    padding-left: 0px;
+}
+
+.cal-event-title {
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+.cal-event-time {
+    font-size: 0.75em;
+}
