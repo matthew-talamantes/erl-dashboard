@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CalendarBody from './CalendarBody';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const Calendar = ({ displayDate, events }) => {
 
@@ -62,20 +65,22 @@ const Calendar = ({ displayDate, events }) => {
     }, [month, year]);
 
     return (
-        <section className="container-md">
-            <div className="row">
-                <table id="calendar-element" className="calendar col mt-4 border border-dark rounded">
-                    <thead className="border border-dark">
-                        <tr>
-                            <th colSpan="7"><span className="btn" id="btn-year-decrease" onClick={decreaseYear}>{`<`}</span> { year } <span className="btn" id="btn-year-increase" onClick={increaseYear}>{`>`}</span></th>
-                        </tr>
-                        <tr>
-                            <th className="border border-dark" colSpan="7"><span className="btn" id="btn-month-decrease" onClick={decreaseMonth}>{`<`}</span> {getMonthName(month)} <span className="btn" id="btn-month-increase" onClick={increaseMonth}>{`>`}</span></th>
-                        </tr>
-                    </thead>
-                    <CalendarBody year={year} month={month} daysOfMonth={daysOfMonth} events={getMonthEvents(month, year)} />
-                </table>
-            </div>
+        <section>
+            <Container fluid="md">
+                <Row className="justify-content-center  ps-1 pe-1">
+                    <table id="calendar-element" className="calendar col mt-4 border border-dark rounded">
+                        <thead className="border border-dark">
+                            <tr>
+                                <th colSpan="7"><span className="btn" id="btn-year-decrease" onClick={decreaseYear}>{`<`}</span> { year } <span className="btn" id="btn-year-increase" onClick={increaseYear}>{`>`}</span></th>
+                            </tr>
+                            <tr>
+                                <th className="border border-dark" colSpan="7"><span className="btn" id="btn-month-decrease" onClick={decreaseMonth}>{`<`}</span> {getMonthName(month)} <span className="btn" id="btn-month-increase" onClick={increaseMonth}>{`>`}</span></th>
+                            </tr>
+                        </thead>
+                        <CalendarBody year={year} month={month} daysOfMonth={daysOfMonth} events={getMonthEvents(month, year)} />
+                    </table>
+                </Row>
+            </Container>
         </section>
     );
 };
