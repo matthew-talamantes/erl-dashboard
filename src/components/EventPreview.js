@@ -44,7 +44,7 @@ const EventPreview = ({ event }) => {
     const EventOverlay = () => (
         <OverlayTrigger trigger={['hover', 'focus']} placement='right' overlay={popover}>
             <li className="cal-event ps-1">
-                <a tabIndex="0" className="" role="button" data-bs-trigger="focus">
+                <a tabIndex="0" href='/' role="button" data-bs-trigger="focus">
                     <h5 className="cal-event-title">{event['title']}</h5>
                     <p className="cal-event-time">{getTwelveHr(event['startTime'])} - {getTwelveHr(event['endTime'])}</p>
                 </a>
