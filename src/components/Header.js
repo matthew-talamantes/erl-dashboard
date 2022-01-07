@@ -12,10 +12,11 @@ const Header = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse  className="justify-content-end" id="basic-navbar-nav">
                         <Nav id="navbarSupportedContent">
-                            <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/">Home</Nav.Link>
+                            <Nav.Link disabled href="/">Home</Nav.Link>
+                            <Nav.Link href="/">About</Nav.Link>
+                            <Nav.Link href="/">Calendar</Nav.Link>
+                            <Nav.Link href="/">My Account</Nav.Link>
+                            <Nav.Link href="/" className="btn btn-primary text-light">Sign In</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
