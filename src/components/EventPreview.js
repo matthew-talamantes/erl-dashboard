@@ -22,10 +22,10 @@ const EventPreview = ({ event }) => {
 
     const popoverRef = React.useRef();
     React.useEffect(() => {
-        var popover = new bootstrap.Popover(popoverRef.current, {
-            content: "Hello popover content!",
-            title: "My Popover"
-        })
+        // var popover = new bootstrap.Popover(popoverRef.current, {
+        //     content: "Hello popover content!",
+        //     title: "My Popover"
+        // })
         });
 
 
