@@ -23,15 +23,6 @@ const EventPreview = ({ event }) => {
 
 
 
-
-    // const popoverRef = React.useRef();
-    // React.useEffect(() => {
-    //     // var popover = new bootstrap.Popover(popoverRef.current, {
-    //     //     content: "Hello popover content!",
-    //     //     title: "My Popover"
-    //     // })
-    //     });
-
     const popover = (
         <Popover id="popover-basic">
             <Popover.Header as="h3">{event['title']}</Popover.Header>
@@ -43,7 +34,7 @@ const EventPreview = ({ event }) => {
     );
 
     const EventOverlay = () => (
-        <OverlayTrigger trigger={['hover', 'focus']} placement='right' overlay={popover}>
+        <OverlayTrigger trigger={['hover', 'focus']} placement='auto' overlay={popover}>
             <li className="cal-event ps-1">
                 <a tabIndex="0" href='/' role="button" data-bs-trigger="focus">
                     <h5 className="cal-event-title">{event['title']}</h5>
