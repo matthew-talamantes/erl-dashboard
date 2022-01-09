@@ -7,9 +7,9 @@ import Calendar from './components/Calendar';
 function App() {
 
   const [events, setEvents] = React.useState({
-    2021: {
-      0: {
-        1: [
+    '2021': {
+      '0': {
+        '1': [
           {
             title: 'New Year\'s Day',
             type: 'event',
@@ -26,8 +26,8 @@ function App() {
           }
         ]
       },
-      10: {
-        10: [
+      '10': {
+        '10': [
           {
             title: 'Birthday Dinner',
             type: 'event',
