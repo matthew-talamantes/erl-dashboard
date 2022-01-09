@@ -34,9 +34,10 @@ const EventPreview = ({ event }) => {
 
     const popover = (
         <Popover id="popover-basic">
-            <Popover.Header as="h3">Popover Header</Popover.Header>
+            <Popover.Header as="h3">{event['title']}</Popover.Header>
             <Popover.Body>
-                This is the popover body!
+                <p>{getTwelveHr(event['startTime'])} - {getTwelveHr(event['endTime'])}</p>
+                <p>{event['notes']}</p>
             </Popover.Body>
         </Popover>
     );
