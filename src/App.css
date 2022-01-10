@@ -1,12 +1,24 @@
 table#calendar-element.calendar {
     table-layout: fixed;
-    min-width: 640px;
+    /* min-width: 640px; */
     max-width: 100%;
-    flex: 1 1 640px;
+    /* flex: 1 1 640px; */
 }
 
 .calendar th {
     text-align: center;
+}
+
+@media (max-width: 492px) {
+    .cal-weekday-name {
+        font-size: 0.5em;
+    }
+}
+
+@media (max-width: 672px) and (min-width: 492) {
+    .cal-weekday-name {
+        font-size: 0.75em;
+    }
 }
 
 .calendar tbody tr {
