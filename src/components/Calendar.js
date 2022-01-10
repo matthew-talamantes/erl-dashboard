@@ -68,7 +68,7 @@ const Calendar = ({ displayDate, events }) => {
         <section>
             <Container fluid="md">
                 <Row className="justify-content-center  ps-1 pe-1">
-                    <table id="calendar-element" className="calendar col mt-4 border border-dark rounded">
+                    <table id="calendar-element" className="calendar mt-4 border border-dark rounded">
                         <thead className="border border-dark">
                             <tr>
                                 <th colSpan="7"><span className="btn" id="btn-year-decrease" onClick={decreaseYear}>{`<`}</span> { year } <span className="btn" id="btn-year-increase" onClick={increaseYear}>{`>`}</span></th>

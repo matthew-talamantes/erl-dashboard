@@ -1,5 +1,8 @@
-.calendar {
+table#calendar-element.calendar {
     table-layout: fixed;
+    min-width: 640px;
+    max-width: 100%;
+    flex: 1 1 640px;
 }
 
 .calendar th {
