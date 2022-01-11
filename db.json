@@ -1,19 +1,37 @@
 {
-  "posts": [
+  "events": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "title": "New Year\"s Day",
+      "type": "event",
+      "year": "2021",
+      "month": "0",
+      "day": "1",
+      "startTime": "0:00",
+      "endTime": "23:59",
+      "notes": ""
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "id": 2,
+      "title": "Test Entry",
+      "type": "event",
+      "year": "2021",
+      "month": "0",
+      "day": "1",
+      "startTime": "8:00",
+      "endTime": "9:30",
+      "notes": "This is a test entry."
+    },
+    {
+      "id": 3,
+      "title": "Birthday Dinner",
+      "type": "event",
+      "year": "2021",
+      "month": "10",
+      "day": "10",
+      "startTime": "16:30",
+      "endTime": "17:30",
+      "notes": "At Ford\"s Fish Shack!"
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }
