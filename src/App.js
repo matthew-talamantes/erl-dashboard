@@ -11,20 +11,45 @@ function App() {
   const buildEventsObject = rawEvents => {
     let eventsObj = {};
     rawEvents.forEach(event => {
+      const eventYear = event['year'];
+      const eventMonth = event['month'];
+      const eventDay = event['day'];
+
       if (event['year'] in eventsObj) {
-        // if (event['month'] in eventsObj[event['year']]) {
-        //   if (event['day'] in eventsObj[event['year']][event['month']]) {
-        //     eventsObj[event['year']][event['month']][event['day']].push(event);
-        //   } else {
-        //     eventsObj[event['year']][event['month']][event['day']] = [event];
-        //   }
-        // } else {
-        //   eventsObj[event['year']][event['month']][event['day']] = [event];
-        // }
+        if (eventMonth in eventsObj[eventYear]) {
+          if (eventDay in eventsObj[eventYear][eventMonth]) {
+            eventsObj[eventYear][eventMonth][eventDay].push(event);
+          } else {
+            eventsObj = {
+              [eventYear]: {
+                [eventMonth]: {
+                  [eventDay]: [event],
+                  ...eventsObj[eventYear][eventMonth]
+                },
+                ...eventsObj[eventYear]
+              },
+              ...eventsObj
+            };
+          }
+        } else {
+          eventsObj = {
+            ...eventsObj,
+            [eventYear]: {
+              ...eventsObj[eventYear],
+              [eventMonth]: {
+                [eventDay]: [event]
+              }
+            }
+          };
+          console.log('Else is running');
+        }
       } else {
-        eventsObj[event['year']] = {
-          event['month']: {
-            event['day']: [event], 
+        eventsObj = {
+          ...eventsObj,
+          [eventYear]: {
+            [eventMonth]: {
+              [eventDay]: [event]
+            }
           },
         };
       }
