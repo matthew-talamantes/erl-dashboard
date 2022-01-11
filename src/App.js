@@ -41,7 +41,6 @@ function App() {
               }
             }
           };
-          console.log('Else is running');
         }
       } else {
         eventsObj = {
