@@ -11,6 +11,7 @@ const Calendar = ({ displayDate, events }) => {
 
     const [year, setYear] = React.useState(displayDate.getFullYear());
     const [month, setMonth] = React.useState(displayDate.getMonth());
+    const [calEvents, setCalEvents] = React.useState({});
 
 
     const getMonthName = (date) => {
@@ -50,7 +51,7 @@ const Calendar = ({ displayDate, events }) => {
 
     const getMonthEvents = (month, year) => {
         try {
-            return events[year][month];
+            return calEvents[year][month];
         } catch (e) {
             if (e instanceof TypeError) {
                 return {};
@@ -60,9 +61,70 @@ const Calendar = ({ displayDate, events }) => {
 
     const [daysOfMonth, setDaysOfMonth] = React.useState(daysInMonth(month, year));
 
+    const insertIntoObject= (eventsObj, event) => {
+        const eventYear = event['year'];
+        const eventMonth = event['month'];
+        const eventDay = event['day'];
+    
+        if (event['year'] in eventsObj) {
+          if (eventMonth in eventsObj[eventYear]) {
+            if (eventDay in eventsObj[eventYear][eventMonth]) {
+              eventsObj[eventYear][eventMonth][eventDay].push(event);
+            } else {
+              eventsObj = {
+                [eventYear]: {
+                  [eventMonth]: {
+                    [eventDay]: [event],
+                    ...eventsObj[eventYear][eventMonth]
+                  },
+                  ...eventsObj[eventYear]
+                },
+                ...eventsObj
+              };
+            }
+          } else {
+            eventsObj = {
+              ...eventsObj,
+              [eventYear]: {
+                ...eventsObj[eventYear],
+                [eventMonth]: {
+                  [eventDay]: [event]
+                }
+              }
+            };
+          }
+        } else {
+          eventsObj = {
+            ...eventsObj,
+            [eventYear]: {
+              [eventMonth]: {
+                [eventDay]: [event]
+              }
+            },
+          };
+        }
+    
+        return eventsObj;
+      };
+    
+      const buildEventsObject = rawEvents => {
+        let eventsObj = {};
+        rawEvents.forEach(event => {
+          eventsObj = insertIntoObject(eventsObj, event);
+        });
+    
+        return eventsObj;
+      };
+
     React.useEffect(() => {
         setDaysOfMonth(daysInMonth(month, year));
     }, [month, year]);
+
+    React.useEffect(() => {
+        const eventsObj = buildEventsObject(events);
+        setCalEvents(eventsObj);
+    }, [events]);
+    
 
     return (
         <section>
@@ -91,8 +153,7 @@ Calendar.defaultProps = {
 };
 
 Calendar.propTypes = {
-    displayDate: PropTypes.instanceOf(Date),
-    events: PropTypes.object
+    displayDate: PropTypes.instanceOf(Date)
 }
 
 export default Calendar;

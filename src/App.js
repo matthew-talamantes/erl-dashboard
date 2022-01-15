@@ -7,69 +7,13 @@ import Calendar from './components/Calendar';
 function App() {
   
   const url = 'http://localhost:5000';
-  const [events, setEvents] = React.useState({});
-
-  const insertIntoObject= (eventsObj, event) => {
-    const eventYear = event['year'];
-    const eventMonth = event['month'];
-    const eventDay = event['day'];
-
-    if (event['year'] in eventsObj) {
-      if (eventMonth in eventsObj[eventYear]) {
-        if (eventDay in eventsObj[eventYear][eventMonth]) {
-          eventsObj[eventYear][eventMonth][eventDay].push(event);
-        } else {
-          eventsObj = {
-            [eventYear]: {
-              [eventMonth]: {
-                [eventDay]: [event],
-                ...eventsObj[eventYear][eventMonth]
-              },
-              ...eventsObj[eventYear]
-            },
-            ...eventsObj
-          };
-        }
-      } else {
-        eventsObj = {
-          ...eventsObj,
-          [eventYear]: {
-            ...eventsObj[eventYear],
-            [eventMonth]: {
-              [eventDay]: [event]
-            }
-          }
-        };
-      }
-    } else {
-      eventsObj = {
-        ...eventsObj,
-        [eventYear]: {
-          [eventMonth]: {
-            [eventDay]: [event]
-          }
-        },
-      };
-    }
-
-    return eventsObj;
-  };
-
-  const buildEventsObject = rawEvents => {
-    let eventsObj = {};
-    rawEvents.forEach(event => {
-      eventsObj = insertIntoObject(eventsObj, event);
-    });
-
-    return eventsObj;
-  };
+  const [events, setEvents] = React.useState([]);
 
   React.useEffect(() => {
     const fetchEvents = async () => {
       const res = await fetch(`${url}/events`);
       const data = await res.json();
-      const eventsObj = buildEventsObject(data);
-      setEvents(eventsObj);
+      setEvents(data);
     };
 
     fetchEvents();
@@ -85,8 +29,8 @@ function App() {
     });
 
     const data = await res.json();
-    const newEvents = insertIntoObject(events, data);
-    setEvents(newEvents);
+    // const newEvents = insertIntoObject(events, data);
+    // setEvents(newEvents);
   };
 
   return (
