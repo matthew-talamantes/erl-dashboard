@@ -29,8 +29,6 @@ function App() {
     });
 
     const data = await res.json();
-    // const newEvents = insertIntoObject(events, data);
-    // setEvents(newEvents);
   };
 
   return (
