@@ -52,7 +52,7 @@ const AddEvent = () => {
                     </Row>
                 </Form.Group>
                 <Row className='justify-content-md-center'>
-                    <Col sm md='4' className='justify-content-center'>
+                    <Col sm md='4' className='d-flex justify-content-end'>
                         <Button type='submit'>Submit</Button>
                     </Col>
                 </Row>
