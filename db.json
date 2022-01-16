@@ -32,6 +32,39 @@
       "startTime": "16:30",
       "endTime": "17:30",
       "notes": "At Ford\"s Fish Shack!"
+    },
+    {
+      "title": "Test Event",
+      "type": "event",
+      "year": "2022",
+      "month": "0",
+      "day": "17",
+      "startTime": "10:33",
+      "endTime": "11:33",
+      "notes": "This is a test event",
+      "id": 4
+    },
+    {
+      "title": "Test Event 2",
+      "type": "event",
+      "year": "2022",
+      "month": "0",
+      "day": "19",
+      "startTime": "13:00",
+      "endTime": "14:00",
+      "notes": "dafsdfasd",
+      "id": 5
+    },
+    {
+      "title": "Test Eventbbb",
+      "type": "event",
+      "year": "2022",
+      "month": "0",
+      "day": "21",
+      "startTime": "14:54",
+      "endTime": "16:54",
+      "notes": "gfghdghdfgh",
+      "id": 6
     }
   ]
 }

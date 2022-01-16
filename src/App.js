@@ -39,7 +39,7 @@ function App() {
     <Router>
       <Header />
       <Routes>
-        <Route path='/addEvent' element={<AddEvent />} />
+        <Route path='/addEvent' element={<AddEvent onAdd={addEvent} />} />
         <Route path='/' element={
           <>
             <Link to='/addEvent'>Add Event</Link>
