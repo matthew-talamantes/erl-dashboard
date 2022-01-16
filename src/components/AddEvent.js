@@ -7,6 +7,17 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const AddEvent = () => {
+
+    const [name, setName] = React.useState('');
+    const [date, setDate] = React.useState('');
+    const [startTime, setStartTime] = React.useState('');
+    const [endTime, setEndTime] = React.useState('');
+    const [notes, setNotes] = React.useState('');
+    
+    const onSubmit = (e) => {
+        e.preventDefault();
+    };
+
     return (
         <Container>
             <Form>
@@ -40,7 +51,11 @@ const AddEvent = () => {
                         </Col>
                     </Row>
                 </Form.Group>
-                <Button type='submit'>Submit</Button>
+                <Row className='justify-content-md-center'>
+                    <Col sm md='4' className='justify-content-center'>
+                        <Button type='submit'>Submit</Button>
+                    </Col>
+                </Row>
             </Form>
         </Container>
     )
