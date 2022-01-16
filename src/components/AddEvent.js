@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -9,6 +9,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const AddEvent = ({ onAdd }) => {
+    
+    let navigate = useNavigate();
 
     const [name, setName] = React.useState('');
     const [date, setDate] = React.useState('');
@@ -62,7 +64,7 @@ const AddEvent = ({ onAdd }) => {
         setEndTime('');
         setNotes('');
 
-        return '<Redirect to="/" />';
+        navigate('/');
     };
 
 
