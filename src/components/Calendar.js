@@ -72,14 +72,14 @@ const Calendar = ({ displayDate, events }) => {
               eventsObj[eventYear][eventMonth][eventDay].push(event);
             } else {
               eventsObj = {
+                ...eventsObj,
                 [eventYear]: {
+                  ...eventsObj[eventYear],
                   [eventMonth]: {
-                    [eventDay]: [event],
-                    ...eventsObj[eventYear][eventMonth]
-                  },
-                  ...eventsObj[eventYear]
-                },
-                ...eventsObj
+                    ...eventsObj[eventYear][eventMonth],
+                    [eventDay]: [event]
+                  }
+                }
               };
             }
           } else {
