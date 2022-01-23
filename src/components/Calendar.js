@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CalendarBody from './CalendarBody';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import { Link } from 'react-router-dom';
 
@@ -132,8 +133,10 @@ const Calendar = ({ displayDate, events }) => {
     return (
         <section className="mt-4">
             <Container fluid="md">
-              <Row className="justify-content-end ps-1 pe-1">
-              <Link to='/addEvent' className='col-2 btn btn-primary'>Add Event</Link>
+              <Row xs={"auto"} className="justify-content-end ps-1 pe-1">
+                <Col className="d-flex justify-content-end ps-0 pe-0">
+                  <Link to='/addEvent' className='btn btn-primary'>Add Event</Link>
+                </Col>
               </Row>
               <Row className="justify-content-center  ps-1 pe-1">
                   <table id="calendar-element" className="calendar mt-4 border border-dark rounded">
