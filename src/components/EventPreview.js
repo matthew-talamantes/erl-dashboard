@@ -2,6 +2,8 @@ import React from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 
+import { Link } from 'react-router-dom';
+
 const EventPreview = ({ event }) => {
 
     const getTwelveHr = (time) => {
@@ -36,10 +38,10 @@ const EventPreview = ({ event }) => {
     const EventOverlay = () => (
         <OverlayTrigger trigger={['hover', 'focus']} placement='auto' overlay={popover}>
             <li className="cal-event ps-1">
-                <a tabIndex="0" href='/' role="button" data-bs-trigger="focus">
+                <Link tabIndex="0" to={`/event/${event['id']}`} role="button" data-bs-trigger="focus">
                     <h5 className="cal-event-title">{event['title']}</h5>
                     <p className="cal-event-time">{getTwelveHr(event['startTime'])} - {getTwelveHr(event['endTime'])}</p>
-                </a>
+                </Link>
             </li>
         </OverlayTrigger>
     );

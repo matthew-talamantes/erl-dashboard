@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Header from './components/Header';
 import AddEvent from './components/AddEvent';
 import Calendar from './components/Calendar';
+import EventView from './components/EventView';
 
 function App() {
   
@@ -45,6 +46,7 @@ function App() {
             <Calendar displayDate={new Date()} events={events} />
           </>
         } />
+        <Route path='/event/:id' element={<EventView url={url} />} />
       </Routes>
     </Router>
   );
