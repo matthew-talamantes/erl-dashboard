@@ -28,7 +28,7 @@ table#calendar-element.calendar {
 
 
 td.calendar-day {
-    height: 10em;
+    height: 5.5em;
     text-align: left;
     position: relative;
 }
