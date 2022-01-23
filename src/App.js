@@ -42,7 +42,6 @@ function App() {
         <Route path='/addEvent' element={<AddEvent onAdd={addEvent} />} />
         <Route path='/' element={
           <>
-            <Link to='/addEvent'>Add Event</Link>
             <Calendar displayDate={new Date()} events={events} />
           </>
         } />
