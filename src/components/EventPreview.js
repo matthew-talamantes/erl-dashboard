@@ -11,14 +11,14 @@ const EventPreview = ({ event }) => {
         const milHour = timeList[0];
         const minutes = timeList[1];
         let suffix = '';
-        
+        let hour = 0;
         if (milHour < 12) {
             suffix = 'AM';
+            hour = milHour;
         } else {
             suffix = 'PM';
+            hour = milHour - 12;
         }
-
-        const hour = ((milHour + 11) % 12 + 1);
         
         return `${hour}:${minutes}${suffix}`;
     };

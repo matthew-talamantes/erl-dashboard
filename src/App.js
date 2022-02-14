@@ -25,27 +25,31 @@ function App() {
     return utcDate;
   };
 
+  const convertEvent = (item) => {
+    let eventObj = {};
+    eventObj['id'] = item['uid'];
+    eventObj['title'] = item['title'];
+    eventObj['notes'] = item['description'];
+    eventObj['type'] = item['eventType'];
+    
+    // For now you can't have a endTime on a different day as startTime
+    const utcStart = setUtcDate(item['startTime']);
+    const utcEnd = setUtcDate(item['endTime']);
+    eventObj['year'] = utcStart.getFullYear();
+    eventObj['month'] = utcStart.getMonth();
+    eventObj['day'] = utcStart.getDate();
+    eventObj['startTime'] = `${utcStart.getHours()}:${utcStart.getMinutes()}`;
+    eventObj['endTime'] = `${utcEnd.getHours()}:${utcEnd.getMinutes()}`;
+    return eventObj;
+  }
+
   React.useEffect(() => {
     const fetchEvents = async () => {
       const res = await fetch(`${url}/events/`);
       const jsonData = await res.json();
       // Convert to expected format
-      const data = jsonData.map(item => {
-        let eventObj = {};
-        eventObj['id'] = item['uid'];
-        eventObj['title'] = item['title'];
-        eventObj['notes'] = item['description'];
-        eventObj['type'] = item['eventType'];
-        
-        // For now you can't have a endTime on a different day as startTime
-        const utcStart = setUtcDate(item['startTime']);
-        const utcEnd = setUtcDate(item['endTime']);
-        eventObj['year'] = utcStart.getFullYear();
-        eventObj['month'] = utcStart.getMonth();
-        eventObj['day'] = utcStart.getDate();
-        eventObj['startTime'] = `${utcStart.getHours()}:${utcStart.getMinutes()}`;
-        eventObj['endTime'] = `${utcEnd.getHours()}:${utcEnd.getMinutes()}`;
-        return eventObj;
+      const data = jsonData.map(item => { 
+        return convertEvent(item);
       });
 
       setEvents(data);
@@ -55,15 +59,29 @@ function App() {
   }, []);
 
   const addEvent = async (event) => {
-    const res = await fetch(`${url}/events`, {
+    const startHour = event['startTime'].slice(0, event['startTime'].indexOf(':'));
+    const startMinute = event['startTime'].slice(-2);
+    const endHour = event['endTime'].slice(0, event['endTime'].indexOf(':'));
+    const endMinute = event['endTime'].slice(-2);
+    const startDate = new Date(event['year'], event['month'], event['day'], startHour, startMinute);
+    const endDate = new Date(event['year'], event['month'], event['day'], endHour, endMinute);
+    const postEvent = {
+      'title': event['title'],
+      'startTime': `${startDate.getUTCFullYear()}-${startDate.getUTCMonth() + 1}-${startDate.getUTCDate()}T${startDate.getUTCHours()}:${startDate.getUTCMinutes()}:${startDate.getUTCSeconds()}`,
+      'endTime': `${endDate.getUTCFullYear()}-${endDate.getUTCMonth() + 1}-${endDate.getUTCDate()}T${endDate.getUTCHours()}:${endDate.getUTCMinutes()}:${endDate.getUTCSeconds()}`,
+      'description': event['notes'],
+    };
+
+    const res = await fetch(`${url}/events/`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
       },
-      body: JSON.stringify(event),
+      body: JSON.stringify(postEvent),
     });
 
-    const data = await res.json();
+    const jsonData = await res.json();
+    const data = convertEvent(jsonData);
     setEvents([...events, data]);
   };
 
