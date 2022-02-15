@@ -16,9 +16,9 @@ function App() {
   const setUtcDate = (dateStr) => {
     const year = dateStr.slice(0, 4);
     const month = parseInt(dateStr.slice(5, 7)) - 1;
-    const day = dateStr .slice(8, 10);
+    const day = dateStr.slice(8, 10);
     const hour = dateStr.slice(11, 13);
-    const minute = dateStr. slice(14, 16);
+    const minute = dateStr.slice(14, 16);
     const second = dateStr.slice(17, 19);
 
     const utcDate = new Date(Date.UTC(year, month, day, hour, minute, second));
@@ -40,6 +40,7 @@ function App() {
     eventObj['day'] = utcStart.getDate();
     eventObj['startTime'] = `${utcStart.getHours()}:${utcStart.getMinutes()}`;
     eventObj['endTime'] = `${utcEnd.getHours()}:${utcEnd.getMinutes()}`;
+    eventObj['slug'] = item['slug'];
     return eventObj;
   }
 
@@ -56,7 +57,7 @@ function App() {
     };
 
     fetchEvents();
-  }, []);
+  });
 
   const addEvent = async (event) => {
     const startHour = event['startTime'].slice(0, event['startTime'].indexOf(':'));
