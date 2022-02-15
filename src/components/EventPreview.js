@@ -14,10 +14,18 @@ const EventPreview = ({ event }) => {
         let hour = 0;
         if (milHour < 12) {
             suffix = 'AM';
-            hour = milHour;
+            if (milHour === 0) {
+                hour = 12;
+            } else {
+                hour = milHour;
+            }
         } else {
             suffix = 'PM';
-            hour = milHour - 12;
+            if (milHour === 12) {
+                hour = milHour;
+            } else {
+                hour = milHour - 12;
+            }
         }
         
         return `${hour}:${minutes}${suffix}`;
@@ -38,7 +46,7 @@ const EventPreview = ({ event }) => {
     const EventOverlay = () => (
         <OverlayTrigger trigger={['hover', 'focus']} placement='auto' overlay={popover}>
             <li className="cal-event ps-1">
-                <Link tabIndex="0" to={`/event/${event['id']}`} role="button" data-bs-trigger="focus">
+                <Link tabIndex="0" to={`/event/${event['slug']}`} role="button" data-bs-trigger="focus">
                     <h5 className="cal-event-title">{event['title']}</h5>
                     <p className="cal-event-time">{getTwelveHr(event['startTime'])} - {getTwelveHr(event['endTime'])}</p>
                 </Link>

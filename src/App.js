@@ -57,7 +57,7 @@ function App() {
     };
 
     fetchEvents();
-  });
+  }, []);
 
   const addEvent = async (event) => {
     const startHour = event['startTime'].slice(0, event['startTime'].indexOf(':'));
@@ -96,7 +96,7 @@ function App() {
             <Calendar displayDate={new Date()} events={events} />
           </>
         } />
-        <Route path='/event/:id' element={<EventView url={url} />} />
+        <Route path='/event/:slug' element={<EventView url={url} convertEvent={convertEvent} />} />
       </Routes>
     </Router>
   );
