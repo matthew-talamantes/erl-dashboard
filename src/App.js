@@ -7,10 +7,47 @@ import Header from "./components/Header";
 import AddEvent from "./components/AddEvent";
 import Calendar from "./components/Calendar";
 import EventView from "./components/EventView";
+import Signup from "./components/Signup";
 
 function App() {
   const url = "http://127.0.0.1:8000";
   const [events, setEvents] = React.useState([]);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+
+  const signUp = async (credentials) => {
+    const postUser = {
+      username: credentials.username,
+      email: credentials.email,
+      password1: credentials.password1,
+      password2: credentials.password2,
+    };
+    const res = await fetch(`${url}/api-auth/registration/`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(postUser),
+    });
+    const resStatus = await res.status;
+    if (resStatus === "204") {
+      setIsAuthenticated(true);
+    }
+  };
+
+  const logOut = async () => {
+    const res = await fetch(`${url}/api-auth/logout/`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: {},
+    });
+
+    const resStatus = await res.status;
+    if (resStatus === "200") {
+      setIsAuthenticated(false);
+    }
+  };
 
   const setUtcDate = (dateStr) => {
     const year = dateStr.slice(0, 4);
@@ -106,8 +143,9 @@ function App() {
 
   return (
     <Router>
-      <Header />
+      <Header isAuthenticated={isAuthenticated} logout={logOut} />
       <Routes>
+        <Route path="/signup" element={<Signup onSignup={signUp} />} />
         <Route path="/addEvent" element={<AddEvent onAdd={addEvent} />} />
         <Route
           path="/"
