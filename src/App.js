@@ -25,17 +25,7 @@ function App() {
   const [refreshCookie, setRefreshCookie, removeRefreshCookie] = useCookies([
     "erl-refresh-token",
   ]);
-
-  // Just for testing, on preduction use cookies
-  const [authToken, setAuthToken] = React.useState("");
-  const [refreshToken, setRefreshToken] = React.useState("");
-
-  const getCsrf = async () => {
-    const csrfCookie = Cookies.get("csrftoken");
-    if (typeof csrfCookie === "undefined") {
-      const res = await axios.get(`${url}/accounts/csrf_cookie/`);
-    }
-  };
+  const [authExpiry, setAuthExpiry] = React.useState(new Date());
 
   const setJwtCookie = (cookieType, token) => {
     const decoded = jwt_decode(token);
@@ -45,6 +35,7 @@ function App() {
       expires: expire,
     };
     if (cookieType === "authToken") {
+      setAuthExpiry(expire);
       setAuthCookie("erl-auth", token, options);
     } else if (cookieType === "refreshToken") {
       setRefreshCookie("erl-refresh-token", token, options);
@@ -52,23 +43,29 @@ function App() {
   };
 
   const refreshAccessToken = async () => {
-    const config = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    const body = {
-      refresh: refreshToken,
-    };
-    const res = await axios.post(
-      `${url}/api-auth/token/refresh/`,
-      JSON.stringify(body),
-      config
-    );
-    const resStatus = await res.status;
-    if (resStatus === 200) {
-      setJwtCookie("authToken", res.data.authToken);
+    const currentDate = new Date();
+    if (authExpiry - currentDate <= 1 * 60 * 1000) {
+      const config = {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      };
+      const body = {
+        refresh: Cookies.get("erl-refresh-token"),
+      };
+      const res = await axios.post(
+        `${url}/api-auth/token/refresh/`,
+        JSON.stringify(body),
+        config
+      );
+      const resStatus = await res.status;
+      if (resStatus === 200) {
+        setIsAuthenticated(true);
+        setJwtCookie("authToken", res.data.access);
+      } else {
+        setIsAuthenticated(false);
+      }
     }
   };
 
@@ -103,15 +100,6 @@ function App() {
         "Content-Type": "application/json",
       },
     };
-    // const res = await fetch(`${url}/api-auth/login/`, {
-    //   method: "OPTIONS",
-    //   credentials: "include",
-    //   withCredentials: true,
-    //   headers: {
-    //     "Content-type": "application/json",
-    //   },
-    //   // body: JSON.stringify(postUser),
-    // });
 
     const res = await axios.post(
       `${url}/api-auth/login/`,
@@ -122,13 +110,8 @@ function App() {
     if (resStatus === 200) {
       setJwtCookie("authToken", res.data.access_token);
       setJwtCookie("refreshToken", res.data.refresh_token);
+      setIsAuthenticated(true);
     }
-
-    console.log("GOtcha");
-    // const resStatus = await res.status;
-    // if (resStatus === 204) {
-    //   setIsAuthenticated(true);
-    // }
   };
 
   const logOut = async () => {
@@ -181,19 +164,24 @@ function App() {
 
   React.useEffect(() => {
     const fetchEvents = async () => {
-      const res = await fetch(`${url}/api/events/`, {
-        credentials: "include",
-        withCredentials: true,
-      });
-      const jsonData = await res.json();
-      // Convert to expected format
-      const data = jsonData.map((item) => {
-        return convertEvent(item);
-      });
+      await refreshAccessToken();
+      const config = {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("erl-auth")}`,
+        },
+      };
+      try {
+        const res = await axios.get(`${url}/api/events/`, config);
+        // Convert to expected format
+        const data = res.data.map((item) => {
+          return convertEvent(item);
+        });
 
-      setEvents(data);
+        setEvents(data);
+      } catch (error) {}
     };
-
+    
+    
     fetchEvents();
   }, []);
 
