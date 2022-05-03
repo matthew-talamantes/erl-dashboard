@@ -1,4 +1,5 @@
 import React from "react";
+
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
@@ -24,13 +25,13 @@ const Header = ({ isAuthenticated, logout }) => {
               {isAuthenticated ? (
                 <>
                   <Nav.Link href="/">My Account</Nav.Link>
-                  <Button type="button" onClick={logout()}>
+                  <Button type="button" onClick={logout}>
                     Logout
                   </Button>
                 </>
               ) : (
-                <Nav.Link href="/signup" className="btn btn-primary text-light">
-                  Sign Up
+                <Nav.Link href="/login" className="btn btn-primary text-light">
+                  Login
                 </Nav.Link>
               )}
             </Nav>

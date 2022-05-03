@@ -2,17 +2,75 @@ import React from "react";
 import "./App.css";
 
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { useCookies } from "react-cookie";
 
 import Header from "./components/Header";
 import AddEvent from "./components/AddEvent";
 import Calendar from "./components/Calendar";
 import EventView from "./components/EventView";
 import Signup from "./components/Signup";
+import Login from "./components/Login";
+import { getByLabelText } from "@testing-library/react";
 
 function App() {
   const url = "http://127.0.0.1:8000";
   const [events, setEvents] = React.useState([]);
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [authCookie, setAuthCookie, removeAuthCookie] = useCookies([
+    "erl-auth",
+  ]);
+  const [refreshCookie, setRefreshCookie, removeRefreshCookie] = useCookies([
+    "erl-refresh-token",
+  ]);
+
+  // Just for testing, on preduction use cookies
+  const [authToken, setAuthToken] = React.useState("");
+  const [refreshToken, setRefreshToken] = React.useState("");
+
+  const getCsrf = async () => {
+    const csrfCookie = Cookies.get("csrftoken");
+    if (typeof csrfCookie === "undefined") {
+      const res = await axios.get(`${url}/accounts/csrf_cookie/`);
+    }
+  };
+
+  const setJwtCookie = (cookieType, token) => {
+    const decoded = jwt_decode(token);
+    const expire = new Date(parseInt(decoded.exp) * 1000);
+    const options = {
+      path: "/",
+      expires: expire,
+    };
+    if (cookieType === "authToken") {
+      setAuthCookie("erl-auth", token, options);
+    } else if (cookieType === "refreshToken") {
+      setRefreshCookie("erl-refresh-token", token, options);
+    }
+  };
+
+  const refreshAccessToken = async () => {
+    const config = {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+    const body = {
+      refresh: refreshToken,
+    };
+    const res = await axios.post(
+      `${url}/api-auth/token/refresh/`,
+      JSON.stringify(body),
+      config
+    );
+    const resStatus = await res.status;
+    if (resStatus === 200) {
+      setJwtCookie("authToken", res.data.authToken);
+    }
+  };
 
   const signUp = async (credentials) => {
     const postUser = {
@@ -23,20 +81,61 @@ function App() {
     };
     const res = await fetch(`${url}/api-auth/registration/`, {
       method: "POST",
+      credentials: "include",
+      withCredentials: true,
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify(postUser),
     });
     const resStatus = await res.status;
-    if (resStatus === "204") {
-      setIsAuthenticated(true);
+  };
+
+  const login = async (credentials) => {
+    const postUser = {
+      email: credentials.email,
+      password: credentials.password,
+    };
+
+    const config = {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+    // const res = await fetch(`${url}/api-auth/login/`, {
+    //   method: "OPTIONS",
+    //   credentials: "include",
+    //   withCredentials: true,
+    //   headers: {
+    //     "Content-type": "application/json",
+    //   },
+    //   // body: JSON.stringify(postUser),
+    // });
+
+    const res = await axios.post(
+      `${url}/api-auth/login/`,
+      JSON.stringify(postUser),
+      config
+    );
+    const resStatus = await res.status;
+    if (resStatus === 200) {
+      setJwtCookie("authToken", res.data.access_token);
+      setJwtCookie("refreshToken", res.data.refresh_token);
     }
+
+    console.log("GOtcha");
+    // const resStatus = await res.status;
+    // if (resStatus === 204) {
+    //   setIsAuthenticated(true);
+    // }
   };
 
   const logOut = async () => {
     const res = await fetch(`${url}/api-auth/logout/`, {
       method: "POST",
+      credentials: "include",
+      withCredentials: true,
       headers: {
         "Content-type": "application/json",
       },
@@ -44,7 +143,7 @@ function App() {
     });
 
     const resStatus = await res.status;
-    if (resStatus === "200") {
+    if (resStatus === 200) {
       setIsAuthenticated(false);
     }
   };
@@ -82,7 +181,10 @@ function App() {
 
   React.useEffect(() => {
     const fetchEvents = async () => {
-      const res = await fetch(`${url}/api/events/`);
+      const res = await fetch(`${url}/api/events/`, {
+        credentials: "include",
+        withCredentials: true,
+      });
       const jsonData = await res.json();
       // Convert to expected format
       const data = jsonData.map((item) => {
@@ -130,6 +232,8 @@ function App() {
 
     const res = await fetch(`${url}/api/events/`, {
       method: "POST",
+      credentials: "include",
+      withCredentials: true,
       headers: {
         "Content-type": "application/json",
       },
@@ -146,6 +250,7 @@ function App() {
       <Header isAuthenticated={isAuthenticated} logout={logOut} />
       <Routes>
         <Route path="/signup" element={<Signup onSignup={signUp} />} />
+        <Route path="/login" element={<Login onLogin={login} />} />
         <Route path="/addEvent" element={<AddEvent onAdd={addEvent} />} />
         <Route
           path="/"

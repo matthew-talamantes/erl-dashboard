@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -92,6 +93,13 @@ const Signup = ({ onSignup }) => {
           </Row>
         </Form.Group>
       </Form>
+      <Row className="justify-content-md-center">
+        <Col sm md="4">
+          <p>
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
+        </Col>
+      </Row>
     </Container>
   );
 };
