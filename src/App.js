@@ -128,6 +128,8 @@ function App() {
     const resStatus = await res.status;
     if (resStatus === 200) {
       setIsAuthenticated(false);
+      removeAuthCookie('erl-auth');
+      removeRefreshCookie('erl-refresh-token');
     }
   };
 
