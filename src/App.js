@@ -13,6 +13,7 @@ import Calendar from "./components/Calendar";
 import EventView from "./components/EventView";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import EmailConfirm from "./components/EmailConfirm";
 import { getByLabelText } from "@testing-library/react";
 
 function App() {
@@ -44,7 +45,8 @@ function App() {
 
   const refreshAccessToken = async () => {
     const currentDate = new Date();
-    if (authExpiry - currentDate <= 1 * 60 * 1000) {
+    const refreshCookie = Cookies.get("erl-refresh-token");
+    if ((authExpiry - currentDate <= 1 * 60 * 1000) && typeof refreshCookie !== 'undefined') {
       const config = {
         headers: {
           Accept: "application/json",
@@ -66,6 +68,26 @@ function App() {
       } else {
         setIsAuthenticated(false);
       }
+    }
+  };
+
+  const confirmEmail = async (key) => {
+    refreshAccessToken();
+    const config = {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("erl-auth")}`,
+      },
+    };
+    const body = {
+      'key': key,
+    };
+
+    const res = await axios.post(`${url}/api-auth/registration/account-confirm-email/`, body, config);
+    const resStatus = await res.status;
+    if (resStatus === 200) {
+      console.log('email confirmed');
     }
   };
 
@@ -242,6 +264,7 @@ function App() {
         <Route path="/signup" element={<Signup onSignup={signUp} />} />
         <Route path="/login" element={<Login onLogin={login} />} />
         <Route path="/addEvent" element={<AddEvent onAdd={addEvent} />} />
+        <Route path="/confirm-email/:confirmKey" element={<EmailConfirm confirm={confirmEmail} />} />
         <Route
           path="/"
           element={
