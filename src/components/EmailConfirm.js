@@ -30,12 +30,6 @@ const EmailConfirm = ({ confirm }) => {
     <Container>
         <Form onSubmit={onSubmit}>
             <Form.Group className='mb-3' controlId='formEmailConfirm'>
-                <Row className='justify-content-md-center'>
-                    <Col sm md="4">
-                        <Form.Label>Email Confirmation Key</Form.Label>
-                        <Form.Control type="text" value={confirmKey} onChange={(e) => setConfirmKey(e.target.value)} />
-                    </Col>
-                </Row>
                 <Row className='justify-content-md-center mt-2'>
                     <Col sm md='4' className='d-flex justify-content-end'>
                         <Button type='submit'>Confirm Email</Button>
