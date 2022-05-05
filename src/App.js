@@ -241,13 +241,15 @@ function App() {
       }-${endDate.getUTCDate()}T${endDate.getUTCHours()}:${endDate.getUTCMinutes()}:${endDate.getUTCSeconds()}`,
       description: event["notes"],
     };
-
+    
+    await refreshAccessToken();
     const res = await fetch(`${url}/api/events/`, {
       method: "POST",
       credentials: "include",
       withCredentials: true,
       headers: {
         "Content-type": "application/json",
+        Authorization: `Bearer ${Cookies.get("erl-auth")}`,
       },
       body: JSON.stringify(postEvent),
     });
